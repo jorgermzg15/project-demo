@@ -40,7 +40,7 @@ Opciones:
 # Ubícate en el directorio donde quieres el proyecto
 cd ~/Documents
 
-# Clona el repositorio
+# Clona el repositorio (esto puede ser en terminal de VSCode)
 git clone https://github.com/jorgermzg15/project-demo.git
 
 cd project-demo
@@ -86,6 +86,27 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+### Conda (Anaconda/Miniconda)
+Si prefieres usar Conda, crea un entorno y usa pip dentro del entorno para instalar desde `requirements.txt`:
+
+```bash
+# Crear entorno con Python 3.11 (recomendado)
+conda create -n project-demo python=3.11 -y
+
+# Activar entorno
+conda activate project-demo
+
+# Instalar dependencias con pip dentro del entorno conda
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Para salir del entorno conda:
+
+```bash
+conda deactivate
+```
+
 Para desactivar el entorno virtual:
 ```bash
 deactivate
@@ -125,32 +146,21 @@ Puedes hacerlo desde la sección SQL del panel de Supabase. Ejecuta los siguient
 Registra cada observación del dataset original.
 ```sql
 create table if not exists public.observations (
-  id bigint generated always as identity primary key,
   customer_id integer not null,
   genre smallint not null,           -- 0 = Male, 1 = Female
   age integer not null,
   annual_income_k integer not null,
   spending_score integer not null,
-  inserted_at timestamptz default now()
 );
-
--- Índices útiles
-create index if not exists idx_observations_customer_id on public.observations(customer_id);
 ```
 
 ### Tabla: cluster_labels
 Almacena la asignación de cluster para cada cliente.
 ```sql
 create table if not exists public.cluster_labels (
-  id bigint generated always as identity primary key,
   customer_id integer not null,
   cluster integer not null,
-  inserted_at timestamptz default now(),
-  constraint fk_cluster_customer foreign key (customer_id) references public.observations(customer_id)
 );
-
-create index if not exists idx_cluster_customer on public.cluster_labels(customer_id);
-create index if not exists idx_cluster_label on public.cluster_labels(cluster);
 ```
 
 ### (Opcional) Tabla de centroides
