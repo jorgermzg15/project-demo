@@ -65,7 +65,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Instalar dependencias
-gpip install --upgrade pip
+python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 (Si tu sistema usa `python` en lugar de `python3`, ajusta los comandos.)
@@ -146,11 +146,11 @@ Puedes hacerlo desde la sección SQL del panel de Supabase. Ejecuta los siguient
 Registra cada observación del dataset original.
 ```sql
 create table if not exists public.observations (
-  customer_id integer not null,
-  genre smallint not null,           -- 0 = Male, 1 = Female
-  age integer not null,
-  annual_income_k integer not null,
-  spending_score integer not null,
+   customer_id integer primary key not null,
+   genre smallint not null,           -- 0 = Male, 1 = Female
+   age integer not null,
+   annual_income_k integer not null,
+   spending_score integer not null
 );
 ```
 
@@ -158,8 +158,10 @@ create table if not exists public.observations (
 Almacena la asignación de cluster para cada cliente.
 ```sql
 create table if not exists public.cluster_labels (
-  customer_id integer not null,
-  cluster integer not null,
+   customer_id integer not null,
+   cluster integer not null,
+   constraint fk_cluster_customer foreign key (customer_id)
+      references public.observations(customer_id)
 );
 ```
 
