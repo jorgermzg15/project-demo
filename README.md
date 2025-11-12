@@ -50,6 +50,46 @@ cd project-demo
 Puedes descargar manualmente `demo_notebook.ipynb` y `requirements.txt` desde GitHub (botón Download Raw). Sin embargo, para trabajar en equipo y hacer commits se recomienda clonar.
 
 ---
+## 4.1 Subir tu proyecto a TU PROPIO repositorio de GitHub
+
+**Contexto:** Al clonar este repositorio, Git ya apunta al repo original (`jorgermzg15/project-demo`). Para subir tus cambios a **tu propia cuenta**, sigue estos pasos:
+
+1. **Eliminar el directorio `.git` del proyecto clonado**:
+   ```bash
+   cd project-demo
+   rm -rf .git
+   ```
+
+2. **Crear un nuevo repositorio vacío en tu cuenta de GitHub**:
+   - Ve a https://github.com/new
+   - Nombre: `project-demo` (o el que prefieras)
+   - **NO inicialices con README, .gitignore ni licencia** (ya los tienes localmente)
+   - Copia la URL del nuevo repo (e.g., `https://github.com/TU-USUARIO/project-demo.git`)
+
+3. **Inicializar un nuevo repositorio local y conectarlo**:
+   ```bash
+   # Inicializar Git
+   git init
+   
+   # Agregar todos los archivos
+   git add .
+   
+   # Crear el primer commit
+   git commit -m "Initial commit: proyecto demo"
+   
+   # Establecer rama principal
+   git branch -M main
+   
+   # Asociar con tu repo remoto
+   git remote add origin https://github.com/TU-USUARIO/project-demo.git
+   
+   # Subir al remoto
+   git push -u origin main
+   ```
+
+4. Ahora todos tus commits futuros se subirán a **tu repositorio**.
+
+---
 ## 5. Crear entorno virtual y instalar dependencias
 El archivo `requirements.txt` contiene todas las librerías necesarias.
 
